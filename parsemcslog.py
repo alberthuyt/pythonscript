@@ -3,14 +3,18 @@
 # Reading mcs log file
 
 import os, sys
+import re
 
 def ReadMCSLog():
     """
     Open and read MCS log file
     """
+
+    w = "ERROR|FATAL"
     with open(sys.argv[1]) as f:
         for line in f:
-            print(line)    
+            if re.search("{}".format(w), line): 
+                print(line)    
 
 def main():
     """
