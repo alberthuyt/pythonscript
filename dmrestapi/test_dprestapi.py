@@ -25,9 +25,10 @@ class DMsession:
 
         self.response = requests.post(urljoin(self.url, self.login_service), \
             headers=self.headers, data=ujson.dumps(self.payload), verify=False)
-
+        # logging.info(self.headers)
         if self.response.status_code == 200:
             self.headers["X-CustomTicket"] = self.response.text
+            logging.info(self.response.text)
         return self.response
 
 def test_logout():
@@ -36,15 +37,31 @@ def test_logout():
     """
     dmsession = DMsession()
     response = dmsession.login()
-    assert response.status_code == 200
+    # assert response.status_code == 200
     logout_service = "deploymanager/auth/logout"
-    response = requests.post(urljoin(dmsession.url, logout_service), \
+    url = urljoin(dmsession.url, logout_service)
+    response = requests.post(url, \
         headers=dmsession.headers, verify=False)
+    logging.info(dmsession.headers)
+    assert response.status_code == 200
+
+def test_list_proxy():
+    dmsession = DMsession()
+    response = dmsession.login()
+    assert response.status_code == 200
+
+    list_proxy_service = "deploymanager/proxy"
+    url = urljoin(dmsession.url, list_proxy_service)
+    response = requests.get(url, \
+        headers=dmsession.headers, verify=False)
+    logging.info(url)
+    logging.info(dmsession.headers)
     assert response.status_code == 200
 
 def main():
 
     test_logout()
+    # test_list_proxy()
 
 
 if __name__ == "__main__":
