@@ -58,10 +58,27 @@ def test_list_proxy():
     logging.info(dmsession.headers)
     assert response.status_code == 200
 
+def test_create_recommend():
+    dmsession = DMsession()
+    response = dmsession.login()
+    assert response.status_code == 200
+
+    fn = os.path.join(os.path.dirname(__file__), "recommend_config.json")
+    with open(fn) as f:
+        recommend_config = ujson.load(f)
+
+    create_recommend_service = "deploymanager/recommend"
+    url = urljoin(dmsession.url, create_recommend_service)
+    response = requests.post(url, \
+        headers=dmsession.headers, data=ujson.dumps(recommend_config), verify=False)    
+    logging.info(recommend_config)
+    assert response.status_code == 200
+
 def main():
 
-    test_logout()
+    # test_logout()
     # test_list_proxy()
+    test_create_recommend()
 
 
 if __name__ == "__main__":

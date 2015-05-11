@@ -1,0 +1,5 @@
+{
+    "changeRate" : "0.12",
+    "backupWindowMins" : "720",
+    "includeLocalDisk" : true
+}
