@@ -1,0 +1,25 @@
+[
+    {
+    "dm_server" : {
+                    "server" : "https://ave11.irvineqa.local:8543"
+                }
+    },
+    {
+    "service" : "deploymanager/auth/login"
+    },
+    {
+    "headers" : {
+                "Accept" : "application/json",
+                "Content-Type" : "application/json"
+
+                }
+    },
+    {
+    "vCenter" : {
+                "vcenter" : "winvcenter10.irvineqa.local",
+                "user" : "administrator@vsphere.local",
+                "password" : "P3t3rPan@1"
+                }
+    }
+
+]
