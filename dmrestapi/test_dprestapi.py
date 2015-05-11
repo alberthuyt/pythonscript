@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-
+import os
 import requests
 from urlparse import urljoin
 import logging
@@ -14,7 +14,8 @@ class DMsession:
         """
         Test login DM server
         """
-        with open("/Users/kevinnguyen/alberthuyt/pythonscript/dmrestapi/login_config.json") as f:
+        fn = os.path.join(os.path.dirname(__file__), 'login_config.json')
+        with open(fn) as f:
             self.login_config = ujson.load(f)
 
         self.url = self.login_config[0]["dm_server"]["server"]
@@ -35,10 +36,12 @@ def test_logout():
     """
     dmsession = DMsession()
     response = dmsession.login()
+    assert response.status_code == 200
     logout_service = "deploymanager/auth/logout"
     response = requests.post(urljoin(dmsession.url, logout_service), \
         headers=dmsession.headers, verify=False)
-    
+    assert response.status_code == 200
+
 def main():
 
     test_logout()
