@@ -1,0 +1,27 @@
+{
+    "name" : "proxy4 Harmony 365",
+    "host" : {
+        "type" : "HostSystem",
+        "val"  : "host-28"
+    },
+    "folder" : {
+        "type" : "Folder",
+        "val" : "group-v121"
+    },
+    "datastore" : {
+        "type" : "Datastore",
+        "val"  : "datastore-34"
+    },
+    "networkMapping" : {
+        "Isolated Network" : {
+            "network" : {
+                "type" : "Network",
+                "val"  : "network-45"
+            },
+            "ip" : "10.6.244.42",
+            "dnsString" : "10.6.242.33,10.6.242.34",
+            "gateway"   : "10.6.244.1",
+            "netmask"   : "255.255.255.0"
+        }
+    }
+}
