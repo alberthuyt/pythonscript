@@ -15,14 +15,25 @@ import requests
 class TestDMrestapi:
 
     def setUp(self):
-        self.url = "https://a4ipn452d1.asl.lab.emc.com:8543"
-        self.headers = {"Accept" : "application/json", "Content-Type": "application/json"}
-        self.vCenterPayload = ujson.dumps({"vcenter" : "winvcenter3.irvineqa.local", \
-            "user" : "irvineqa\\avamarqa", \
-            "password" : "changeme"})
-        service = "deploymanager/auth/login"
+        fn = os.path.join(os.path.dirname(__file__), "login_config.json")
+        with open(fn) as f:
+            self.login_config = ujson.load(f)
+        # self.url = "https://a4ipn452d1.asl.lab.emc.com:8543"
+        # self.headers = {"Accept" : "application/json", "Content-Type": "application/json"}
+        # self.vCenterPayload = ujson.dumps({"vcenter" : "winvcenter3.irvineqa.local", \
+        #     "user" : "irvineqa\\avamarqa", \
+        #     "password" : "changeme"})
+        # service = "deploymanager/auth/login
+
+        self.url = self.login_config[0]["dm_server"]["server"]
+        service = self.login_config[1]["service"]
+        self.headers = self.login_config[2]["headers"]
+        self.vCenterPayload = self.login_config[3]["vCenter"]        
+        
         url = urljoin(self.url, service)
-        response = requests.post(url, headers=self.headers, data=self.vCenterPayload, verify=False)
+        logging.info(url)
+        logging.info(self.headers)
+        response = requests.post(url, headers=self.headers, data=ujson.dumps(self.vCenterPayload), verify=False)
         assert response.status_code == 200
         self.response = response.content[1:-1]
         self.headers["X-CustomTicket"] = self.response
@@ -67,7 +78,7 @@ class TestDMrestapi:
         response = requests.post(url, headers=self.headers, data=ujson.dumps(payload), verify=False)
         assert response.status_code == 202
         # self.recommendId = response.content["recommend"]
-    test_create_recommend.will_fail = False
+    test_create_recommend.will_fail = True
 
     def test_proxy_health(self):
         self.test_list_proxy()
@@ -90,7 +101,7 @@ class TestDMrestapi:
         # logging.info(payload)
         response = requests.post(url, headers=self.headers, data=ujson.dumps(payload), verify=False)
         assert response.status_code == 202
-    test_deploy_proxy.will_fail = True
+    test_deploy_proxy.will_fail = False
 
     def test_delete_proxy(self):
         self.test_list_proxy()
