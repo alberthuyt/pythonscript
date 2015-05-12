@@ -2,7 +2,7 @@
 #
 # Date: 5/2015
 # Test Deploy Manager Rest API
-#
+# How to run : nosetests -v -a will_fail dmrestapi/TestDMrestapi.py
 
 
 import os
@@ -15,9 +15,9 @@ import requests
 class TestDMrestapi:
 
     def setUp(self):
-        self.url = "https://ave11.irvineqa.local:8543"
+        self.url = "https://a4ipn452d1.asl.lab.emc.com:8543"
         self.headers = {"Accept" : "application/json", "Content-Type": "application/json"}
-        self.vCenterPayload = ujson.dumps({"vcenter" : "winvcenter10.irvineqa.local", \
+        self.vCenterPayload = ujson.dumps({"vcenter" : "winvcenter3.irvineqa.local", \
             "user" : "irvineqa\\avamarqa", \
             "password" : "changeme"})
         service = "deploymanager/auth/login"
@@ -55,6 +55,7 @@ class TestDMrestapi:
         url = urljoin(self.url, service)
         response = requests.get(url, headers=self.headers, verify=False)
         assert response.status_code == 200
+        self.list_proxy = ujson.loads(response.content)
     test_list_proxy.will_fail = False
 
     def test_create_recommend(self):
@@ -65,4 +66,38 @@ class TestDMrestapi:
             payload = ujson.load(f)
         response = requests.post(url, headers=self.headers, data=ujson.dumps(payload), verify=False)
         assert response.status_code == 202
-    test_create_recommend.will_fail = True
+        # self.recommendId = response.content["recommend"]
+    test_create_recommend.will_fail = False
+
+    def test_proxy_health(self):
+        self.test_list_proxy()
+        for proxy in self.list_proxy:
+            service = "{}/{}/{}".format("deploymanager/proxy", proxy["instanceUUID"], "health")
+            url = urljoin(self.url, service)
+            response = requests.get(url, headers=self.headers, verify=False)
+            assert response.status_code == 200
+    test_proxy_health.will_fail = False
+
+    def test_deploy_proxy(self):
+        """
+        Error code 500 , need to review
+        """
+        service = "deploymanager/proxy"
+        url = urljoin(self.url, service)
+        fn = os.path.join(os.path.dirname(__file__), "proxy", "proxy4-winvcenter3.json")
+        with open(fn) as f:
+            payload = ujson.load(f)
+        # logging.info(payload)
+        response = requests.post(url, headers=self.headers, data=ujson.dumps(payload), verify=False)
+        assert response.status_code == 202
+    test_deploy_proxy.will_fail = True
+
+    def test_delete_proxy(self):
+        self.test_list_proxy()
+        for proxy in self.list_proxy:
+            if "proxy4" in proxy["name"]:
+                service = "{}/{}".format("deploymanager/proxy", proxy["instanceUUID"])
+                url = urljoin(self.url, service)
+                response = requests.delete(url, headers=self.headers, verify=False)
+                assert response.status_code == 202
+    test_delete_proxy.will_fail = False            
