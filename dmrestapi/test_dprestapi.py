@@ -27,7 +27,7 @@ class DMsession:
             headers=self.headers, data=ujson.dumps(self.payload), verify=False)
         # logging.info(self.headers)
         if self.response.status_code == 200:
-            self.headers["X-CustomTicket"] = self.response.text
+            self.headers["X-CustomTicket"] = self.response.content[1:-1]
             logging.info(self.response.text)
         return self.response
 
@@ -37,9 +37,11 @@ def test_logout():
     """
     dmsession = DMsession()
     response = dmsession.login()
-    # assert response.status_code == 200
+    assert response.status_code == 200
+
     logout_service = "deploymanager/auth/logout"
     url = urljoin(dmsession.url, logout_service)
+
     response = requests.post(url, \
         headers=dmsession.headers, verify=False)
     logging.info(dmsession.headers)
@@ -52,10 +54,17 @@ def test_list_proxy():
 
     list_proxy_service = "deploymanager/proxy"
     url = urljoin(dmsession.url, list_proxy_service)
+
+    logging.info(dmsession.headers)
+    logging.info(url)
+
     response = requests.get(url, \
         headers=dmsession.headers, verify=False)
-    logging.info(url)
+
+    
     logging.info(dmsession.headers)
+
+
     assert response.status_code == 200
 
 def test_create_recommend():
@@ -72,12 +81,12 @@ def test_create_recommend():
     response = requests.post(url, \
         headers=dmsession.headers, data=ujson.dumps(recommend_config), verify=False)    
     logging.info(recommend_config)
-    assert response.status_code == 200
+    assert response.status_code == 202
 
 def main():
 
-    # test_logout()
-    # test_list_proxy()
+    test_logout()
+    test_list_proxy()
     test_create_recommend()
 
 
