@@ -91,7 +91,7 @@ class TestDMrestapi:
 
     def test_deploy_proxy(self):
         """
-        Error code 500 , need to review
+        deploy proxy based on json file
         """
         service = "deploymanager/proxy"
         url = urljoin(self.url, service)
