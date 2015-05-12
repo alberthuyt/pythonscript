@@ -91,6 +91,7 @@ def test_delete_proxy():
     assert response.status_code == 200 
     # ujson.loads load string json and change into python
     # ujson.dumps load python and serialize to json
+    #
     list_proxy = ujson.loads(test_list_proxy())
     for proxy in list_proxy:
         if 'proxy4' in proxy['name']:
@@ -100,6 +101,7 @@ def test_delete_proxy():
             url = urljoin(dmsession.url, delete_service)
             response = requests.delete(url, headers=dmsession.headers, verify=False)
             assert response.status_code == 202
+
 
 def main():
 
