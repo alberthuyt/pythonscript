@@ -1,7 +1,7 @@
 [
     {
     "dm_server" : {
-                    "server" : "https://ave11.irvineqa.local:8543"
+                    "server" : "https://a4ipn452d1.asl.lab.emc.com:8543"
                 }
     },
     {
@@ -16,9 +16,9 @@
     },
     {
     "vCenter" : {
-                "vcenter" : "winvcenter10.irvineqa.local",
-                "user" : "administrator@vsphere.local",
-                "password" : "P3t3rPan@1"
+                "vcenter" : "winvcenter3.irvineqa.local",
+                "user" : "irvineqa\\avamarqa",
+                "password" : "changeme"
                 }
     }
 
