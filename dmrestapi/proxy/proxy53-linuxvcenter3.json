@@ -1,0 +1,27 @@
+{
+    "name" : "proxy53 Harmony 373",
+    "host" : {
+        "type" : "HostSystem",
+        "val"  : "host-517"
+    },
+    "folder" : {
+        "type" : "Folder",
+        "val" : "group-v1046"
+    },
+    "datastore" : {
+        "type" : "Datastore",
+        "val"  : "datastore-520"
+    },
+    "networkMapping" : {
+        "Isolated Network" : {
+            "network" : {
+                "type" : "Network",
+                "val"  : "network-522"
+            },
+            "ip" : "10.6.244.135",
+            "dnsString" : "10.6.242.33,10.6.242.34",
+            "gateway"   : "10.6.244.1",
+            "netmask"   : "255.255.255.0"
+        }
+    }
+}

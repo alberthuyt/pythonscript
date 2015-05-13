@@ -16,8 +16,8 @@
     },
     {
     "vCenter" : {
-                "vcenter" : "winvcenter3.irvineqa.local",
-                "user" : "irvineqa\\avamarqa",
+                "vcenter" : "linuxvcenter3.irvineqa.local",
+                "user" : "avamarqa@vsphere.local",
                 "password" : "changeme"
                 }
     }
