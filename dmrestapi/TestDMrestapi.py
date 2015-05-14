@@ -26,12 +26,6 @@ class TestDMrestapi:
         fn = os.path.join(os.path.dirname(__file__), "login_config.json")
         with open(fn) as f:
             self.login_config = ujson.load(f)
-        # self.url = "https://a4ipn452d1.asl.lab.emc.com:8543"
-        # self.headers = {"Accept" : "application/json", "Content-Type": "application/json"}
-        # self.vCenterPayload = ujson.dumps({"vcenter" : "winvcenter3.irvineqa.local", \
-        #     "user" : "irvineqa\\avamarqa", \
-        #     "password" : "changeme"})
-        # service = "deploymanager/auth/login
 
         self.url = self.login_config[0]["dm_server"]["server"]
         service = self.login_config[1]["service"]
