@@ -18,7 +18,7 @@ test = list(itertools.permutations(range_number))
 print "length list {}".format(len(test))
 count = 0
 
-flag = 0 # print 10 solution 
+flag = 0 # control number solutions to print 
 for i in test:
     total = testsum(i)
     if total == 66:
