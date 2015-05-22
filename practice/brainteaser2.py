@@ -10,17 +10,22 @@ import itertools
 
 
 def testsum(x):
-    check = x[0] + 13 * x[1] / x[2] + x[3] + 12 * x[4] - x[5] - 11 + x[6] * x[7] / x[8] - 10
+    check = x[0] + 13 * x[1] / float(x[2]) + x[3] + 12 * x[4] - x[5] - 11 + x[6] * x[7] / float(x[8]) - 10
+    float1 = 13 * x[1]/float(x[2])
+    float2 = x[6] * x[7] / float(x[8])
+    # print "float {} -- {}".format(float1, float2)
+    # print check
     return check
 
 range_number = [i for i in xrange(1,10,1)]
 test = list(itertools.permutations(range_number))
-print "length list {}".format(len(test))
+print "number of loop {}".format(len(test))
 count = 0
 
 flag = 0 # control number solutions to print 
 for i in test:
     total = testsum(i)
+    # print total
     if total == 66:
         count += 1
         if flag < 30:

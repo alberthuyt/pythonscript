@@ -160,7 +160,24 @@ class TestDMrestapi:
                 url = urljoin(self.url, service)
                 response = requests.delete(url, headers=self.headers, verify=False)
                 assert response.status_code == 202
-    test_delete_proxy.will_fail = False            
+    test_delete_proxy.will_fail = False    
+
+    def test_change_password_proxy(self):
+        """
+        TEST CHANGE PASSWORD PROXY 
+        """        
+        self.test_list_proxy()
+        for proxy in self.list_proxy:
+            if "proxy53" in proxy["name"]:
+                service = "{}/{}/{}".format("deploymanager/proxy", proxy["instanceUUID"], "/password")
+                logging.info(service)
+                url = urljoin(self.url, service)
+                fn = os.path.join(os.path.dirname(__file__), "proxy_password.json")
+                with open(fn) as f:
+                    payload = ujson.load(f)
+                response = requests.put(url, headers=self.headers, data=ujson.dumps(payload), verify=False)
+    test_change_password_proxy.will_fail = False
+
 
 def main():
     testDMobj = TestDMrestapi()

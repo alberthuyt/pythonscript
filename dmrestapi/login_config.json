@@ -1,7 +1,7 @@
 [
     {
     "dm_server" : {
-                    "server" : "https://a4ipn452d1.asl.lab.emc.com:8543"
+                    "server" : "https://ave12.irvineqa.local:8543"
                 }
     },
     {
