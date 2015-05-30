@@ -25,6 +25,7 @@ class TestDMrestapi:
     def setUp(self):
         fn = os.path.join(os.path.dirname(__file__), "login_config.json")
         with open(fn) as f:
+            # convert Json file to dictionary
             self.login_config = ujson.load(f)
 
         self.url = self.login_config[0]["dm_server"]["server"]
